@@ -146,11 +146,28 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        console.log("load");
-        loadList();
+        loadList(); 
     });
 
-
+    function loadList() {
+        $.ajax({
+            url: "/api/feedbacks",
+            type: "GET",
+            success: function (data) {
+                $("#records").empty();
+                data.forEach(function (feedback) {
+                    $("#records").append(
+                        `<div class="col-4">${feedback.to}</div>
+                         <div class="col-4">${feedback.subject}</div>
+                         <div class="col-4">${feedback.message}</div>`
+                    );
+                });
+            },
+            error: function () {
+                alert("Ошибка загрузки данных");
+            }
+        });
+    }
 </script>
 </body>
 </html>
